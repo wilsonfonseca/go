@@ -86,6 +86,7 @@ func (action *TradeIndexAction) loadPage() {
 
 	action.Page.BaseURL = action.BaseURL()
 	action.Page.BasePath = action.Path()
+	action.Page.QueryParams = action.GojiCtx
 	action.Page.Limit = action.PagingParams.Limit
 	action.Page.Cursor = action.PagingParams.Cursor
 	action.Page.Order = action.PagingParams.Order

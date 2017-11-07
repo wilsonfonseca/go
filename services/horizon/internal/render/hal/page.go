@@ -37,10 +37,11 @@ type Page struct {
 	} `json:"_links"`
 
 	BasePage
-	BasePath string `json:"-"`
-	Order    string `json:"-"`
-	Limit    uint64 `json:"-"`
-	Cursor   string `json:"-"`
+	BasePath    string `json:"-"`
+	Order       string `json:"-"`
+	Limit       uint64 `json:"-"`
+	Cursor      string `json:"-"`
+	QueryParams url.Values `json:"-"`
 }
 
 // PopulateLinks sets the common links for a page.
