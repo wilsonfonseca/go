@@ -39,7 +39,6 @@ func TestTradeActions_Index(t *testing.T) {
 	q.Add("counter_asset_code", "EUR")
 	q.Add("counter_asset_issuer", "GCQPYGH4K57XBDENKKX55KDTWOTK5WDWRQOH2LHEDX3EKVIQRLMESGBG")
 
-
 	w = ht.Get("/trades?" + q.Encode())
 	if ht.Assert.Equal(200, w.Code) {
 		ht.Assert.PageOf(1, w.Body)

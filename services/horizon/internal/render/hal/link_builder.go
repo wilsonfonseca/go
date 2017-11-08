@@ -34,6 +34,16 @@ func (lb *LinkBuilder) PagedLink(parts ...string) Link {
 	return nl
 }
 
+func (lb *LinkBuilder) FromQueryParams(values url.Values) Link {
+	//nl := lb.Link(parts...)
+	//nl.Href += StandardPagingOptions
+	//nl.PopulateTemplated()
+	href := lb.Base.String() + "?" + values.Encode()
+	return NewLink(href)
+}
+
+
+
 // Linkf provides a helper function that returns a link with an
 // href created by passing the arguments into fmt.Sprintf
 func (lb *LinkBuilder) Linkf(format string, args ...interface{}) Link {

@@ -37,29 +37,37 @@ type Page struct {
 	} `json:"_links"`
 
 	BasePage
-	BasePath    string `json:"-"`
-	Order       string `json:"-"`
-	Limit       uint64 `json:"-"`
-	Cursor      string `json:"-"`
+	BasePath    string     `json:"-"`
+	Order       string     `json:"-"`
+	Limit       uint64     `json:"-"`
+	Cursor      string     `json:"-"`
 	QueryParams url.Values `json:"-"`
 }
 
 // PopulateLinks sets the common links for a page.
 func (p *Page) PopulateLinks() {
 	p.Init()
-	fmts := p.BasePath + "?order=%s&limit=%d&cursor=%s"
 	lb := LinkBuilder{p.BaseURL}
+	fmts := p.BasePath + "?%s"
 
-	p.Links.Self = lb.Linkf(fmts, p.Order, p.Limit, p.Cursor)
+	q := p.QueryParams
 	rec := p.Embedded.Records
 
+	//self
+	p.Links.Self = lb.Linkf(fmts, q.Encode())
+
+	//next
 	if len(rec) > 0 {
-		p.Links.Next = lb.Linkf(fmts, p.Order, p.Limit, rec[len(rec)-1].PagingToken())
-		p.Links.Prev = lb.Linkf(fmts, p.InvertedOrder(), p.Limit, rec[0].PagingToken())
-	} else {
-		p.Links.Next = lb.Linkf(fmts, p.Order, p.Limit, p.Cursor)
-		p.Links.Prev = lb.Linkf(fmts, p.InvertedOrder(), p.Limit, p.Cursor)
+		q.Set("cursor", rec[len(rec)-1].PagingToken())
 	}
+	p.Links.Next = lb.Linkf(fmts, q.Encode())
+
+	//prev
+	q.Set("order", p.InvertedOrder())
+	if len(rec) > 0 {
+		q.Set("cursor", rec[0].PagingToken())
+	}
+	p.Links.Prev = lb.Linkf(fmts, q.Encode())
 }
 
 // InvertedOrder returns the inversion of the page's current order. Used to
