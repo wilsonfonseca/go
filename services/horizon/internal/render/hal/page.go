@@ -53,16 +53,16 @@ func (p *Page) PopulateLinks() {
 	q := p.QueryParams
 	rec := p.Embedded.Records
 
-	//self
+	//self: re-encode existing query params
 	p.Links.Self = lb.Linkf(fmts, q.Encode())
 
-	//next
+	//next: update cursor to last record (if any)
 	if len(rec) > 0 {
 		q.Set("cursor", rec[len(rec)-1].PagingToken())
 	}
 	p.Links.Next = lb.Linkf(fmts, q.Encode())
 
-	//prev
+	//prev: inverse order and update cursor to first record (if any)
 	q.Set("order", p.InvertedOrder())
 	if len(rec) > 0 {
 		q.Set("cursor", rec[0].PagingToken())
