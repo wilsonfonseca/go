@@ -2,6 +2,8 @@ package hal
 
 import (
 	"net/url"
+	"strconv"
+	"fmt"
 )
 
 // BasePage represents the simplest page: one with no links and only embedded records.
@@ -50,8 +52,21 @@ func (p *Page) PopulateLinks() {
 	lb := LinkBuilder{p.BaseURL}
 	fmts := p.BasePath + "?%s"
 
-	q := p.QueryParams
+	fmt.Println(p.BaseURL.Host, p.BasePath)
+
+	var q url.Values
+	if len(p.QueryParams) == 0 {
+		q = make(url.Values)
+	} else {
+		q = p.QueryParams
+	}
+
 	rec := p.Embedded.Records
+
+	//verify paging params
+	q.Set("cursor", p.Cursor)
+	q.Set("order", p.Order)
+	q.Set("limit", strconv.FormatInt(int64(p.Limit), 10))
 
 	//self: re-encode existing query params
 	p.Links.Self = lb.Linkf(fmts, q.Encode())
