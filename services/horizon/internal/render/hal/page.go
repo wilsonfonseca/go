@@ -3,7 +3,6 @@ package hal
 import (
 	"net/url"
 	"strconv"
-	"fmt"
 )
 
 // BasePage represents the simplest page: one with no links and only embedded records.
@@ -46,43 +45,42 @@ type Page struct {
 	QueryParams url.Values `json:"-"`
 }
 
+func ModifyUrlParam(u *url.URL, key string, val string) *url.URL {
+	q := u.Query()
+	q.Del(key)
+	q.Add(key, val)
+	u.RawQuery = q.Encode()
+	return u
+}
+
 // PopulateLinks sets the common links for a page.
 func (p *Page) PopulateLinks() {
 	p.Init()
-	lb := LinkBuilder{p.BaseURL}
-	fmts := p.BasePath + "?%s"
-
-	fmt.Println(p.BaseURL.Host, p.BasePath)
-
-	var q url.Values
-	if len(p.QueryParams) == 0 {
-		q = make(url.Values)
-	} else {
-		q = p.QueryParams
-	}
 
 	rec := p.Embedded.Records
 
+	newUrl := p.BaseURL
+
 	//verify paging params
-	q.Set("cursor", p.Cursor)
-	q.Set("order", p.Order)
-	q.Set("limit", strconv.FormatInt(int64(p.Limit), 10))
+	ModifyUrlParam(newUrl, "cursor", p.Cursor)
+	ModifyUrlParam(newUrl, "order", p.Order)
+	ModifyUrlParam(newUrl, "limit", strconv.FormatInt(int64(p.Limit), 10))
 
 	//self: re-encode existing query params
-	p.Links.Self = lb.Linkf(fmts, q.Encode())
+	p.Links.Self = NewLink(newUrl.String())
 
 	//next: update cursor to last record (if any)
 	if len(rec) > 0 {
-		q.Set("cursor", rec[len(rec)-1].PagingToken())
+		ModifyUrlParam(newUrl, "cursor", rec[len(rec)-1].PagingToken())
 	}
-	p.Links.Next = lb.Linkf(fmts, q.Encode())
+	p.Links.Next = NewLink(newUrl.String())
 
 	//prev: inverse order and update cursor to first record (if any)
-	q.Set("order", p.InvertedOrder())
+	ModifyUrlParam(newUrl, "order", p.InvertedOrder())
 	if len(rec) > 0 {
-		q.Set("cursor", rec[0].PagingToken())
+		ModifyUrlParam(newUrl, "cursor", rec[0].PagingToken())
 	}
-	p.Links.Prev = lb.Linkf(fmts, q.Encode())
+	p.Links.Prev = NewLink(newUrl.String())
 }
 
 // InvertedOrder returns the inversion of the page's current order. Used to

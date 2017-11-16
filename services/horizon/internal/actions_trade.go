@@ -85,9 +85,8 @@ func (action *TradeIndexAction) loadPage() {
 	}
 
 	action.Page.BaseURL = action.BaseURL()
-	action.Page.BasePath = action.Path()
-	action.Page.QueryParams = action.R.Form
-	//action.Page.QueryParams = make(url.Values)
+	action.Page.BaseURL.Path = action.Path()
+	//action.Page.BasePath = action.Path()
 	action.Page.Limit = action.PagingParams.Limit
 	action.Page.Cursor = action.PagingParams.Cursor
 	action.Page.Order = action.PagingParams.Order
