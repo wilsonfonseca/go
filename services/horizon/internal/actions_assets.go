@@ -88,5 +88,5 @@ func (action *AssetsAction) loadPage() {
 	if action.AssetIssuer != "" {
 		linkParams.Set("asset_issuer", action.AssetIssuer)
 	}
-	action.Page.PopulateLinksWithParams(linkParams)
+	action.Page.PopulateLinks()
 }

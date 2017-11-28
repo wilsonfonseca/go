@@ -143,5 +143,15 @@ func (action *Action) EnsureHistoryFreshness() {
 // BaseURL returns the base url for this requestion, defined as a url containing
 // the Host and Scheme portions of the request uri.
 func (action *Action) BaseURL() *url.URL {
-	return httpx.BaseURL(action.Ctx)
+	result := httpx.BaseURL(action.Ctx)
+	result.Path = action.R.URL.Path
+	result.RawQuery = action.R.URL.RawQuery
+	return result
 }
+
+//func (action *Action) FullURL() *url.URL {
+//	result := httpx.BaseURL(action.Ctx)
+//	result.Path = action.R.URL.Path
+//	result.RawQuery = action.R.URL.RawQuery
+//	return result
+//}
