@@ -254,6 +254,7 @@ func packageArchive(dest, buildOS string) {
 // the source directory.  This is used within the script to find the README and
 // other files that should be packaged with the binary.
 func packageName(binName string) string {
+	log.Infof("packageName binName", binName)
 	targets := []string{
 		filepath.Join("services", binName),
 		filepath.Join("tools", binName),
@@ -274,6 +275,8 @@ func packageName(binName string) string {
 		if err != nil {
 			panic(errors.Wrap(err, "stat failed"))
 		}
+
+		log.Infof("packageName result", binName)
 
 		if result != "" {
 			panic("sourceDir() found multiple results!")
