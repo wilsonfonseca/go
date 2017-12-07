@@ -39,4 +39,5 @@ deploy:
     file_glob: true
     on:
       branch: master-debug-build
+      tags: false
       go: '1.8'
