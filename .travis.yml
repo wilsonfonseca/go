@@ -39,6 +39,5 @@ deploy:
       - "compliance-snapshot-linux-amd64.tar.gz"
     file_glob: true
     on:
-      repo: tomerweller/go
-      branch: master-debug-build
+      tags: true
       go: '1.8'
