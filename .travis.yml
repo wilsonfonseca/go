@@ -17,7 +17,7 @@ install:
 - cp linux-amd64/glide $GOPATH/bin
 script:
 - glide install
-- ./support/scripts/run_tests
+- "./support/scripts/run_tests"
 before_deploy:
 - go run ./support/scripts/build_release_artifacts/main.go
 matrix:
@@ -30,14 +30,9 @@ notifications:
     on_failure: always
     secure: Uhx8H2RFNsJ9GknDItSwhMOl5K3HTGNjifJwkLUiRio4JH4PzrkHDOzCOpEzrboviVF+Rch9VsC7HchIY2uyqeB9UW63dCMPeaYSs7rfNCmW8bTcGydeVOe0HV18mpM/4yPy/gsw5Zq+eGq7+p9NZtwkOHeQ/YtoSFcWbQQYs3CPZpBUP95KW1fGTn8OIW6nKkVA0Kyr6aXJFZB9AHIg24R9l2uraHdjg5EUJJO/4yR0GWC1pLTfUCqUt9mXPeGSQOhhvR+pCKSljY3pB6oex2hKH04u3U1iRzOBuKMPmMrcyJDzvVRkCaCn+0LPGZ3vgDDcDdcqYxEk1a1n27wzjqYlDeH4xaYTZGpB18LiX6MAm84+iviL5JILIMQ4NcqVNB2L37zl1UW+BMQUSH6+zQknHkGcOImU984PEdrhCM2uvknvp0+IGXdpyv9WwztzxhJOz6PAE1aA3O+BI1xuSft6sGY07Z0Q9iKO/uCWIHbsfLso16kIubiHzwjSAz90tbCc8VcR4EFeVqEoWm9QwRP0v6pclWMhj9bq3Oye1gKrSCwWPXCg8mRFCCuXgr4dev7I+vKcx43oIddgcx6vIROMYsgX/0gInBrkNxZw3Gu1YUXe1fuNvmCZWSlaWrO+9XWnFItnLs2ypnQjlguKzxgqmfqR0eXmMYBQrH18sxU=
 deploy:
-  - provider: releases
-    skip_cleanup: true
-    api_key:
-      secure: WGcJHIiRYogAoi1cZGMbehnbLqBEKs3LG9OYK76u1BeGz+oAardqyfhA8Ls2ihhkceN+KkdmH3JM4irAYevlq6x3XgFRFowbtxJAAojONWjPYolqnqR4+fE5epiFu+yiDGD34BvF9PVbQur+kkGFDdCErfmj1zi3SVm8dKtI9aRnt3OTkx0D7pZQhpN2PrEvvx99uo2Ilga3uKfsivaYow8bn9O+tdVrbYELOMZ5TFjjiLMI1gQi6pJiWijm+r8eS7nK9U+QMN33UMKqIxgW9TcW/rUruWSRTHgAM686WSQbPSE94enxrt73KKyJFO7Ym30wjG40LV3tA6TJ6p0yShqVkPiYvga+niouT8NIqpq+YEcQilWxoREL5mn8pfrBhZJOHI/RZKL5JhNSIWe30HIDb8miLO41B3AeTk72iFzB297R5CoKsZWpRfbn1TmBhCyqAJB1RIFFSH4EplxZAMT+oVOxw3cmnXu/6fZt4qS7T6PgEOVeHMKFjFQKDI95qUVDIR6TmmefviG8BI07iwXkTb3IMzc8TXd13yYqv2fQmEQb1W42lRuwrAo/EBnYC8ZOnzA85W5d/Ksi25VUdqkgGBGmg4MU5av3voQs71rnqSGz36532jGCMi0T9U7F94T4JCpDfIff0XDWtAvtCRo3k69zPGhVxcwsOv4rv7E=
-    file:
-      - "dist/*"
-    file_glob: true
-    on:
-      branch: master-debug-build
-      tags: false
-      go: '1.8'
+  provider: releases
+  api_key:
+    secure: q/CrylkCtCRGeFW/bqi4nmthYiQxDw4tp5RzZrlh/50ydDVmckrHC8XAqTMs7cIAKxcdPr46cqMCOdl5rtCOzIftLUMOi8b5e4o29k5EBPS+hRuMZDR+yoDYT8k6sJh2DIbSZiwc+zizWCZ8lumomJb2IXlaAxEzjp2HPKGMGzNyoSEuDZg1elKD7jHTbcXVVjfjKu9hC8gtVCsPmc4atCEbY3ZpV4B2fGFGTR8qxSr2AtJx78mVQFfjzsDeFp1SsC8h8oYcfeRTcvTdVW9idCcOtLQ7BOsH916WUhRdokLYAgLBl3Qsp0wgJeFPaZXNzShtZ3hx6pKUmfWxRA+j/28veqGE9B9iVF3mvVF1VO5iYxWXtn23ukd8v4HoGLqa07MBVgupDN1i7IWvIywzRsB3aQ5JHU+8BrbAS49nWJiDPzuq4Cucnif5a0cVMVLmnuEu5blnKgN9IR/BGOZcNISpzU0W3fiSyU+BPdIr5h090IkHOiFYE6QxFNvOY9Aqu/cPb0sxccL0eMGZCbCUKLIu6HjzP+XmNRWQLrR/L0hE/YCyrTIBNZgLP7R4qtjhg7UEP/zoNcr82hHQVUFR/LfInwXnjyBb6TJqze4kvjarvpryQmR55kf4Kbl8ogZtjXE50F/RJU8aYLtf1wMGdi6kcllNd+bsSEMSYeRt7Wo=
+  file: dist/*
+  on:
+    branch: master-debug-build
