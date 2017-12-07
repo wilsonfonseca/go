@@ -35,8 +35,8 @@ deploy:
     api_key:
       secure: WGcJHIiRYogAoi1cZGMbehnbLqBEKs3LG9OYK76u1BeGz+oAardqyfhA8Ls2ihhkceN+KkdmH3JM4irAYevlq6x3XgFRFowbtxJAAojONWjPYolqnqR4+fE5epiFu+yiDGD34BvF9PVbQur+kkGFDdCErfmj1zi3SVm8dKtI9aRnt3OTkx0D7pZQhpN2PrEvvx99uo2Ilga3uKfsivaYow8bn9O+tdVrbYELOMZ5TFjjiLMI1gQi6pJiWijm+r8eS7nK9U+QMN33UMKqIxgW9TcW/rUruWSRTHgAM686WSQbPSE94enxrt73KKyJFO7Ym30wjG40LV3tA6TJ6p0yShqVkPiYvga+niouT8NIqpq+YEcQilWxoREL5mn8pfrBhZJOHI/RZKL5JhNSIWe30HIDb8miLO41B3AeTk72iFzB297R5CoKsZWpRfbn1TmBhCyqAJB1RIFFSH4EplxZAMT+oVOxw3cmnXu/6fZt4qS7T6PgEOVeHMKFjFQKDI95qUVDIR6TmmefviG8BI07iwXkTb3IMzc8TXd13yYqv2fQmEQb1W42lRuwrAo/EBnYC8ZOnzA85W5d/Ksi25VUdqkgGBGmg4MU5av3voQs71rnqSGz36532jGCMi0T9U7F94T4JCpDfIff0XDWtAvtCRo3k69zPGhVxcwsOv4rv7E=
     file:
-      - "compliance-snapshot-darwin-amd64.tar.gz"
-      - "compliance-snapshot-linux-amd64.tar.gz"
+      - "dist/compliance-snapshot-darwin-amd64.tar.gz"
+      - "dist/compliance-snapshot-linux-amd64.tar.gz"
     file_glob: true
     on:
       tags: true
