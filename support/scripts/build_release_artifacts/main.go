@@ -45,9 +45,9 @@ func main() {
 	if os.Getenv("TRAVIS_EVENT_TYPE") == "cron" {
 		buildNightlies()
 		os.Exit(0)
-	} else if os.Getenv("TRAVIS_TAG") != "" {
-		buildByTag()
-		os.Exit(0)
+	//} else if os.Getenv("TRAVIS_TAG") != "" {
+	//	buildByTag()
+	//	os.Exit(0)
 	} else {
 		buildSnapshots()
 		os.Exit(0)
