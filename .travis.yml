@@ -23,7 +23,7 @@ before_deploy: #adopted from https://stackoverflow.com/questions/28217556/travis
 - go run ./support/scripts/build_release_artifacts/main.go
 - git config --global user.email "builds@travis-ci.com"
 - git config --global user.name "Travis CI"
-#- git tag -d snapshots
+- git tag -d snapshots
 - git tag snapshots -a -m "Generated snapshots from TravisCI for build $TRAVIS_BUILD_NUMBER"
 - git push -q https://$GITHUB_OAUTH_TOKEN@github.com/stellar/go --tags
 
