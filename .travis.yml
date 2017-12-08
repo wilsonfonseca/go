@@ -25,7 +25,7 @@ before_deploy: #adopted from https://stackoverflow.com/questions/28217556/travis
 - git config --global user.name "Travis CI"
 - export GIT_TAG=$TRAVIS_BRANCH-0.1.$TRAVIS_BUILD_NUMBER
 - git tag $GIT_TAG -a -m "Generated snapshot from TravisCI for build $TRAVIS_BUILD_NUMBER"
-- git push -q https://$TAGPERM@github.com/stellar/go --tags
+- git push -q https://$GITHUB_OAUTH_TOKEN@github.com/stellar/go --tags
 
 matrix:
   fast_finish: true
