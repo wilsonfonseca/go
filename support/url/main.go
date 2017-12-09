@@ -29,5 +29,6 @@ func Parse(s string) (u URL, err error) {
 	if err != nil {
 		return
 	}
-	return URL(*gu), nil
+	u = URL(*gu)
+	return
 }

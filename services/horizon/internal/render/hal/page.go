@@ -41,7 +41,6 @@ type Links struct {
 type Page struct {
 	Links Links `json:"_links"`
 	BasePage
-	//BasePath string `json:"-"`
 	Order    string `json:"-"`
 	Limit    uint64 `json:"-"`
 	Cursor   string `json:"-"`

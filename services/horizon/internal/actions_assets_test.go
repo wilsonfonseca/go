@@ -243,9 +243,9 @@ func TestAssetsActions(t *testing.T) {
 				}
 			}
 
-			ht.Assert.EqualUrlStrings("http://localhost" + kase.wantSelf, links.Self.Href)
-			ht.Assert.EqualUrlStrings("http://localhost" + kase.wantPrevious, links.Prev.Href)
-			ht.Assert.EqualUrlStrings("http://localhost" + kase.wantNext, links.Next.Href)
+			ht.Assert.EqualUrlStrings("http://localhost"+kase.wantSelf, links.Self.Href)
+			ht.Assert.EqualUrlStrings("http://localhost"+kase.wantPrevious, links.Prev.Href)
+			ht.Assert.EqualUrlStrings("http://localhost"+kase.wantNext, links.Next.Href)
 		})
 	}
 }
