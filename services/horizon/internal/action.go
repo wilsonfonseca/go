@@ -148,7 +148,7 @@ func (action *Action) FullURL() *url.URL {
 	return result
 }
 
-// BaseURL returns the base url for this request, defined as a url containing
+// baseURL returns the base url for this request, defined as a url containing
 // the Host and Scheme portions of the request uri.
 func (action *Action) baseURL() *url.URL {
 	return httpx.BaseURL(action.Ctx)
