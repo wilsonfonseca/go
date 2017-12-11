@@ -297,7 +297,7 @@ func prepareDest(pkg, bin, version, os, arch string) string {
 	run("cp", "LICENSE-APACHE.txt", dest)
 	run("cp", "COPYING", dest)
 	run("cp", filepath.Join(pkg, "README.md"), dest)
-	//run("cp", filepath.Join(pkg, "CHANGELOG.md"), dest)
+	run("cp", filepath.Join(pkg, "CHANGELOG.md"), dest)
 	return dest
 }
 
