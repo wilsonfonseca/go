@@ -19,6 +19,7 @@ import (
 )
 
 var extractBinName = regexp.MustCompile(`^(?P<bin>[a-z-]+)-(?P<tag>.+)$`)
+var excludePkgs = []string{"services/bifrost"}
 
 var builds = []buildConfig{
 	{"darwin", "amd64"},
@@ -56,6 +57,22 @@ func main() {
 	log.Info("nothing to do")
 }
 
+
+// difference returns the elements in a that aren't in b
+func difference(a, b []string) []string {
+	mb := map[string]bool{}
+	for _, x := range b {
+		mb[x] = true
+	}
+	ab := []string{}
+	for _, x := range a {
+		if _, ok := mb[x]; !ok {
+			ab = append(ab, x)
+		}
+	}
+	return ab
+}
+
 // package searches the `tools` and `services` packages of this repo to find
 // the source directory.  This is used within the script to find the README and
 // other files that should be packaged with the binary.
@@ -63,7 +80,7 @@ func binPkgNames() []string {
 	result := []string{}
 	result = append(result, binNamesForDir("services")...)
 	result = append(result, binNamesForDir("tools")...)
-	return result
+	return difference(result, excludePkgs)
 }
 
 func binNamesForDir(dir string) []string {
