@@ -24,7 +24,7 @@ before_deploy: #adopted from https://stackoverflow.com/questions/28217556/travis
 - git config --global user.name "Travis CI"
 - git tag -d snapshots || true
 - git push --delete -q https://$GITHUB_OAUTH_TOKEN@github.com/stellar/go snapshots || true
-- git tag snapshots -a -m "Generated snapshots from TravisCI for build $TRAVIS_BUILD_NUMBER"
+- git tag snapshots -a -m "Generated snapshots from TravisCI for build $TRAVIS_BUILD_NUMBER on $(date --utc +'%F-%T')"
 - git push -q https://$GITHUB_OAUTH_TOKEN@github.com/stellar/go --tags
 
 matrix:
@@ -46,7 +46,7 @@ deploy:
   overwrite: true
   prerelease: true
   tags: false
-  name: Snapshots $(date +'%F-%T')
+  name: Snapshots $(date --utc +'%F-%T')
   on:
     branch: master-debug-build
     go: '1.8'
