@@ -43,7 +43,7 @@ deploy:
     tags: false
     name: Snapshots $(date --utc +'%F-%T')
     on:
-      branch: master
+      branch: travis-snapshots
       go: '1.8'
   #tagged releases
   - provider: releases
