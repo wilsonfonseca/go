@@ -47,6 +47,9 @@ func (e *Exchange) Find(source Asset, destination Asset) {
 // and a new less popular asset has offers with it it won't be visited. What is more, assets that
 // are less popular are usually connected with only 1 popular asset. This makes the number of dfs
 // calls even smaller.
+//
+// In the worst case scenario we can switch to BFS to find the shortest paths first and stop after
+// checking X nodes.
 func (e *Exchange) dfs(source *Node, destinations map[*Node]bool, depth int, p *path) []*path {
 	pathsFound := []*path{}
 
