@@ -7,10 +7,10 @@ import (
 	"github.com/stellar/go/services/horizon/internal/db2"
 	"github.com/stellar/go/services/horizon/internal/db2/history"
 	"github.com/stellar/go/services/horizon/internal/ledger"
-	"github.com/stellar/go/services/horizon/internal/render/sse"
 	"github.com/stellar/go/services/horizon/internal/render/problem"
-	"github.com/stellar/go/services/horizon/internal/toid"
+	"github.com/stellar/go/services/horizon/internal/render/sse"
 	"github.com/stellar/go/services/horizon/internal/resourceadapter"
+	"github.com/stellar/go/services/horizon/internal/toid"
 	"github.com/stellar/go/support/render/hal"
 )
 
@@ -29,7 +29,7 @@ type OperationIndexAction struct {
 	TransactionFilter string
 	PagingParams      db2.PageQuery
 	Records           []history.Operation
-	Ledgers           history.LedgerCache
+	Ledgers           *history.LedgerCache
 	Page              hal.Page
 }
 
@@ -111,6 +111,8 @@ func (action *OperationIndexAction) loadRecords() {
 
 // loadLedgers populates the ledger cache for this action
 func (action *OperationIndexAction) loadLedgers() {
+	action.Ledgers = &history.LedgerCache{}
+
 	for _, op := range action.Records {
 		action.Ledgers.Queue(op.LedgerSequence())
 	}

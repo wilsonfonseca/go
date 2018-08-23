@@ -6,10 +6,10 @@ import (
 
 	"github.com/stellar/go/services/horizon/internal/db2"
 	"github.com/stellar/go/services/horizon/internal/db2/history"
-	"github.com/stellar/go/support/errors"
-	"github.com/stellar/go/support/render/hal"
 	"github.com/stellar/go/services/horizon/internal/render/sse"
 	"github.com/stellar/go/services/horizon/internal/resourceadapter"
+	"github.com/stellar/go/support/errors"
+	"github.com/stellar/go/support/render/hal"
 )
 
 // This file contains the actions:
@@ -29,7 +29,7 @@ type EffectIndexAction struct {
 	PagingParams db2.PageQuery
 	Records      []history.Effect
 	Page         hal.Page
-	Ledgers      history.LedgerCache
+	Ledgers      *history.LedgerCache
 }
 
 // JSON is a method for actions.JSON
@@ -89,6 +89,8 @@ func (action *EffectIndexAction) SSE(stream sse.Stream) {
 
 // loadLedgers populates the ledger cache for this action
 func (action *EffectIndexAction) loadLedgers() {
+	action.Ledgers = &history.LedgerCache{}
+
 	for _, eff := range action.Records {
 		action.Ledgers.Queue(eff.LedgerSequence())
 	}
