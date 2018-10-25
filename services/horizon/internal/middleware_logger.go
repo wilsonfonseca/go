@@ -44,10 +44,21 @@ func LoggerMiddleware(h http.Handler) http.Handler {
 	return http.HandlerFunc(fn)
 }
 
+// getClientData gets client data (name or version) from header or GET parameter
+// (useful when not possible to set headers, like in EventStream).
+func getClientData(r *http.Request, headerName string) string {
+	value := r.Header.Get(headerName)
+	if value != "" {
+		return value
+	}
+
+	return r.URL.Query().Get(headerName)
+}
+
 func logStartOfRequest(ctx context.Context, r *http.Request) {
 	log.Ctx(ctx).WithFields(log.F{
-		"client_name":    r.Header.Get(clientNameHeader),
-		"client_version": r.Header.Get(clientVersionHeader),
+		"client_name":    getClientData(r, clientNameHeader),
+		"client_version": getClientData(r, clientVersionHeader),
 		"forwarded_ip":   firstXForwardedFor(r),
 		"host":           r.Host,
 		"ip":             remoteAddrIP(r),
@@ -60,8 +71,8 @@ func logStartOfRequest(ctx context.Context, r *http.Request) {
 func logEndOfRequest(ctx context.Context, r *http.Request, duration time.Duration, mw middleware.WrapResponseWriter, streaming bool) {
 	log.Ctx(ctx).WithFields(log.F{
 		"bytes":          mw.BytesWritten(),
-		"client_name":    r.Header.Get(clientNameHeader),
-		"client_version": r.Header.Get(clientVersionHeader),
+		"client_name":    getClientData(r, clientNameHeader),
+		"client_version": getClientData(r, clientVersionHeader),
 		"duration":       duration.Seconds(),
 		"forwarded_ip":   firstXForwardedFor(r),
 		"host":           r.Host,
