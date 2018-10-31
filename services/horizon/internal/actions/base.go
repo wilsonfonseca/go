@@ -3,6 +3,7 @@ package actions
 import (
 	"database/sql"
 	"net/http"
+	"time"
 
 	horizonContext "github.com/stellar/go/services/horizon/internal/context"
 	"github.com/stellar/go/services/horizon/internal/render"
@@ -115,8 +116,8 @@ func (base *Base) Execute(action interface{}) {
 			case <-ctx.Done():
 				stream.Done() // Call Done on the stream so that it doesn't send any more heartbeats.
 				return
-			case <-sse.Pumped():
-				//no-op, continue onto the next iteration
+			default:
+				time.Sleep(3 * time.Second)
 			}
 		}
 	case render.MimeRaw:
