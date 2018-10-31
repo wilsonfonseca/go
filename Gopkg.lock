@@ -649,11 +649,11 @@
   revision = "976c720a22c8eb4eb6a0b4348ad85ad12491a506"
 
 [[projects]]
-  digest = "1:36b5e2fb2ae68fbb0de12dffc53a83b229911dd0f73800bfb0a4a3423aecf996"
+  digest = "1:d4ced5d6d0fa46a643fcd4ff17fc16b42effecd65ef41b0358ace53a60cec4a2"
   name = "github.com/throttled/throttled"
   packages = ["."]
   pruneopts = "T"
-  revision = "16461402e649340fa0e881e5fecaab3e5a3512be"
+  revision = "d14250e8c0c3666e1ddc4b5a910fc6b35469d643"
   source = "https://github.com/bartekn/throttled.git"
 
 [[projects]]
