@@ -54,10 +54,21 @@ type App struct {
 	metrics                  metrics.Registry
 	historyLatestLedgerGauge metrics.Gauge
 	historyElderLedgerGauge  metrics.Gauge
-	horizonConnGauge         metrics.Gauge
 	coreLatestLedgerGauge    metrics.Gauge
-	coreConnGauge            metrics.Gauge
-	goroutineGauge           metrics.Gauge
+
+	horizonMaxOpenConnectionsGauge metrics.Gauge
+	horizonOpenConnectionsGauge    metrics.Gauge
+	horizonInUseConnectionsGauge   metrics.Gauge
+	horizonIdleConnectionsGauge    metrics.Gauge
+	horizonWaitCountGauge          metrics.Gauge
+
+	coreMaxOpenConnectionsGauge metrics.Gauge
+	coreOpenConnectionsGauge    metrics.Gauge
+	coreInUseConnectionsGauge   metrics.Gauge
+	coreIdleConnectionsGauge    metrics.Gauge
+	coreWaitCountGauge          metrics.Gauge
+
+	goroutineGauge metrics.Gauge
 }
 
 // NewApp constructs an new App instance from the provided config.
@@ -277,8 +288,17 @@ func (a *App) UpdateMetrics() {
 	a.historyElderLedgerGauge.Update(int64(ls.HistoryElder))
 	a.coreLatestLedgerGauge.Update(int64(ls.CoreLatest))
 
-	a.horizonConnGauge.Update(int64(a.historyQ.Session.DB.Stats().OpenConnections))
-	a.coreConnGauge.Update(int64(a.coreQ.Session.DB.Stats().OpenConnections))
+	a.horizonMaxOpenConnectionsGauge.Update(int64(a.historyQ.Session.DB.Stats().MaxOpenConnections))
+	a.horizonOpenConnectionsGauge.Update(int64(a.historyQ.Session.DB.Stats().OpenConnections))
+	a.horizonInUseConnectionsGauge.Update(int64(a.historyQ.Session.DB.Stats().InUse))
+	a.horizonIdleConnectionsGauge.Update(int64(a.historyQ.Session.DB.Stats().Idle))
+	a.horizonWaitCountGauge.Update(int64(a.historyQ.Session.DB.Stats().WaitCount))
+
+	a.coreMaxOpenConnectionsGauge.Update(int64(a.coreQ.Session.DB.Stats().MaxOpenConnections))
+	a.coreOpenConnectionsGauge.Update(int64(a.coreQ.Session.DB.Stats().OpenConnections))
+	a.coreInUseConnectionsGauge.Update(int64(a.coreQ.Session.DB.Stats().InUse))
+	a.coreIdleConnectionsGauge.Update(int64(a.coreQ.Session.DB.Stats().Idle))
+	a.coreWaitCountGauge.Update(int64(a.coreQ.Session.DB.Stats().WaitCount))
 }
 
 // DeleteUnretainedHistory forwards to the app's reaper.  See

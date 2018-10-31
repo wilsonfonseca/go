@@ -16,14 +16,35 @@ func initDbMetrics(app *App) {
 	app.historyElderLedgerGauge = metrics.NewGauge()
 	app.coreLatestLedgerGauge = metrics.NewGauge()
 
-	app.horizonConnGauge = metrics.NewGauge()
-	app.coreConnGauge = metrics.NewGauge()
+	app.horizonMaxOpenConnectionsGauge = metrics.NewGauge()
+	app.horizonOpenConnectionsGauge = metrics.NewGauge()
+	app.horizonInUseConnectionsGauge = metrics.NewGauge()
+	app.horizonIdleConnectionsGauge = metrics.NewGauge()
+	app.horizonWaitCountGauge = metrics.NewGauge()
+
+	app.coreMaxOpenConnectionsGauge = metrics.NewGauge()
+	app.coreOpenConnectionsGauge = metrics.NewGauge()
+	app.coreInUseConnectionsGauge = metrics.NewGauge()
+	app.coreIdleConnectionsGauge = metrics.NewGauge()
+	app.coreWaitCountGauge = metrics.NewGauge()
+
 	app.goroutineGauge = metrics.NewGauge()
 	app.metrics.Register("history.latest_ledger", app.historyLatestLedgerGauge)
 	app.metrics.Register("history.elder_ledger", app.historyElderLedgerGauge)
 	app.metrics.Register("stellar_core.latest_ledger", app.coreLatestLedgerGauge)
-	app.metrics.Register("history.open_connections", app.horizonConnGauge)
-	app.metrics.Register("stellar_core.open_connections", app.coreConnGauge)
+
+	app.metrics.Register("history.max_open_connections", app.horizonMaxOpenConnectionsGauge)
+	app.metrics.Register("history.open_connections", app.horizonOpenConnectionsGauge)
+	app.metrics.Register("history.in_use", app.horizonInUseConnectionsGauge)
+	app.metrics.Register("history.idle", app.horizonIdleConnectionsGauge)
+	app.metrics.Register("history.wait_count", app.horizonWaitCountGauge)
+
+	app.metrics.Register("stellar_core.max_open_connections", app.coreMaxOpenConnectionsGauge)
+	app.metrics.Register("stellar_core.open_connections", app.coreOpenConnectionsGauge)
+	app.metrics.Register("stellar_core.in_use", app.coreInUseConnectionsGauge)
+	app.metrics.Register("stellar_core.idle", app.coreIdleConnectionsGauge)
+	app.metrics.Register("stellar_core.wait_count", app.coreWaitCountGauge)
+
 	app.metrics.Register("goroutines", app.goroutineGauge)
 }
 
