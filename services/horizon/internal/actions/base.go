@@ -117,7 +117,7 @@ func (base *Base) Execute(action interface{}) {
 				stream.Done() // Call Done on the stream so that it doesn't send any more heartbeats.
 				return
 			default:
-				time.Sleep(3 * time.Second)
+				time.Sleep(10 * time.Second)
 			}
 		}
 	case render.MimeRaw:
