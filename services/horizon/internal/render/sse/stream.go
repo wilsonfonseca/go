@@ -54,7 +54,7 @@ func (s *stream) sendHeartbeats() {
 			s.mu.Unlock()
 			return
 		}
-		WriteHeartbeat(s.w)
+		// WriteHeartbeat(s.w)
 		s.mu.Unlock()
 	}
 }
