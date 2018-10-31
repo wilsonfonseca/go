@@ -57,7 +57,7 @@
 [[constraint]]
   name = "github.com/throttled/throttled"
   source = "https://github.com/bartekn/throttled.git"
-  revision = "29271dfc0ad7d849609ba027b0ecb2231a414c35"
+  revision = "418468fb55bbb75bd6712e9d9949793e924c9305"
 
 [prune]
   go-tests = true
