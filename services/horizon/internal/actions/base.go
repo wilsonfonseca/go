@@ -6,6 +6,7 @@ import (
 	"time"
 
 	horizonContext "github.com/stellar/go/services/horizon/internal/context"
+	"github.com/stellar/go/services/horizon/internal/ledger"
 	"github.com/stellar/go/services/horizon/internal/render"
 	hProblem "github.com/stellar/go/services/horizon/internal/render/problem"
 	"github.com/stellar/go/services/horizon/internal/render/sse"
@@ -64,6 +65,8 @@ func (base *Base) Execute(action interface{}) {
 		stream := sse.NewStream(ctx, base.W)
 
 		for {
+			lastLedgerState := ledger.CurrentState()
+
 			// Rate limit the request if it's a call to stream since it queries the DB every second. See
 			// https://github.com/stellar/go/issues/715 for more details.
 			app := base.R.Context().Value(&horizonContext.AppContextKey)
@@ -112,12 +115,25 @@ func (base *Base) Execute(action interface{}) {
 				return
 			}
 
+			newLedgers := make(chan bool)
+			go func() {
+				for {
+					time.Sleep(5 * time.Second)
+					currentLedgerState := ledger.CurrentState()
+					// Update every 2 ledgers
+					if currentLedgerState.HistoryLatest >= lastLedgerState.HistoryLatest+2 {
+						newLedgers <- true
+						return
+					}
+				}
+			}()
+
 			select {
 			case <-ctx.Done():
 				stream.Done() // Call Done on the stream so that it doesn't send any more heartbeats.
 				return
-			default:
-				time.Sleep(10 * time.Second)
+			case <-newLedgers:
+				continue
 			}
 		}
 	case render.MimeRaw:
