@@ -118,9 +118,9 @@ func (base *Base) Execute(action interface{}) {
 			newLedgers := make(chan bool)
 			go func() {
 				for {
-					time.Sleep(5 * time.Second)
+					time.Sleep(10 * time.Second)
 					currentLedgerState := ledger.CurrentState()
-					if currentLedgerState.HistoryLatest > lastLedgerState.HistoryLatest {
+					if currentLedgerState.HistoryLatest >= lastLedgerState.HistoryLatest+3 {
 						newLedgers <- true
 						return
 					}
