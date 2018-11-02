@@ -120,8 +120,7 @@ func (base *Base) Execute(action interface{}) {
 				for {
 					time.Sleep(5 * time.Second)
 					currentLedgerState := ledger.CurrentState()
-					// Update every 2 ledgers
-					if currentLedgerState.HistoryLatest >= lastLedgerState.HistoryLatest+2 {
+					if currentLedgerState.HistoryLatest > lastLedgerState.HistoryLatest {
 						newLedgers <- true
 						return
 					}
